@@ -1,8 +1,6 @@
 package it.dstech.configuration;
 
 
-import javax.security.auth.message.AuthStatus;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -30,20 +28,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private MyStudenteDetailsService studenteDetailsService;
 
-
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
                 auth.userDetailsService(studenteDetailsService)
                 	.passwordEncoder(bCryptPasswordEncoder);
                 auth.userDetailsService(docenteDetailsService)
-                    .passwordEncoder(bCryptPasswordEncoder);
-      
-                	
+                    .passwordEncoder(bCryptPasswordEncoder);          	
     }
     
-
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -54,7 +46,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers(loginPage).permitAll()
-                .antMatchers("/registration").permitAll()
+                .antMatchers("/registration").hasAuthority("STUDENTE")
                 .antMatchers("/docente/**").hasAuthority("DOCENTE")
                 .antMatchers("/studente/**").hasAuthority("STUDENTE")
                 .anyRequest()

@@ -3,12 +3,10 @@ package it.dstech.service;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import javax.management.relation.Role;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import it.dstech.models.Docente;
+import it.dstech.models.Role;
 import it.dstech.models.Studente;
 import it.dstech.repository.RoleRepository;
 import it.dstech.repository.StudenteRepository;

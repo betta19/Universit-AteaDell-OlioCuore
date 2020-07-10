@@ -39,7 +39,7 @@ public class Docente {
 	@Column(name = "docente_username")
     @Length(min = 5, message = "*Your user name must have at least 5 characters")
     @NotEmpty(message = "*Please provide a user name")
-    private String usermame;
+    private String username;
     
     @Column(name = "email_docente")
     @Email(message = "*Please provide a valid Email")
@@ -59,8 +59,8 @@ public class Docente {
     private Set<Role> roles;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
-	@Column(name = "materia_docente")
-	private List<Materia> materia;
+	@Column(name = "esame_id")
+	private List<Esame> listaEsame;
 
 	public Integer getId() {
 		return id;
@@ -70,12 +70,12 @@ public class Docente {
 		this.id = id;
 	}
 
-	public String getUsermame() {
-		return usermame;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUsermame(String usermame) {
-		this.usermame = usermame;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getEmail() {
@@ -109,16 +109,6 @@ public class Docente {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
-
-	public List<Materia> getMateria() {
-		return materia;
-	}
-
-	public void setMateria(List<Materia> materia) {
-		this.materia = materia;
-	}
-
-	
 	
 	
 }

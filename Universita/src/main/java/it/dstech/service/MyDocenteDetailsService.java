@@ -39,7 +39,7 @@ public class MyDocenteDetailsService implements UserDetailsService {
     }
 
     private UserDetails buildUserForAuthentication(Docente docente, List<GrantedAuthority> authorities) {
-        return new org.springframework.security.core.userdetails.User(docente.getUsermame(), docente.getPassword(),
+        return new org.springframework.security.core.userdetails.User(docente.getUsername(), docente.getPassword(),
                 docente.getActive(), true, true, true, authorities);
     }
 }

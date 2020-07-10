@@ -1,14 +1,15 @@
 package it.dstech.models;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 
@@ -30,7 +31,7 @@ public class Esame {
     @Column(name = "esame_id")
     private Integer id;
 	
-	@JoinTable(name = "nome_esame", joinColumns = @JoinColumn(name = "nome_materia"))
+	@Column(name = "nome_esame")
 	private String nome;
 	
 	@Column(name="data_esame")
@@ -41,6 +42,14 @@ public class Esame {
 	
 	@Column(name="voto_esame")
 	private int voto;
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@Column(name = "docente_id")
+	private List<Docente> listaDocente;
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@Column(name = "studente_id")
+	private List<Studente> listaStudenti;
 
 	public Integer getId() {
 		return id;
