@@ -13,8 +13,6 @@ public interface DocenteRepository extends JpaRepository<Docente, Long> {
 
 	Docente findByEmail(String email);
 
-	Docente findByUserName(String userName);
-	
-	Docente findByEsame(List<Esame> listEsame);
+	Docente findByUsername(String userName);
 
 }

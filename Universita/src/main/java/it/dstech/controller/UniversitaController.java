@@ -53,17 +53,17 @@ public class UniversitaController {
     @PostMapping(value = "/registration")
     public ModelAndView createNewStudente(@Valid Studente studente, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
-        Studente userExists = studenteService.findUserByUserName(studente.getUsername());
+        Studente userExists = studenteService.findUserByUsername(studente.getUsername());
         if (userExists != null) {
             bindingResult
-                    .rejectValue("userName", "error.user",
-                            "There is already a user registered with the user name provided");
+                    .rejectValue("username", "error.user",
+                            "Utente già presente");
         }
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("registration");
         } else {
             studenteService.saveUser(studente);
-            modelAndView.addObject("successMessage", "User has been registered successfully");
+            modelAndView.addObject("messaggio", "Utente registrato con successo!");
             modelAndView.addObject("user", new Studente());
             modelAndView.setViewName("registration");
 
@@ -75,9 +75,9 @@ public class UniversitaController {
     public ModelAndView homeD(){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Docente user = docenteService.findUserByUserName(auth.getName());
-        modelAndView.addObject("userName", "Welcome " + user.getUsername()  + " (" + user.getEmail() + ")");
-        modelAndView.addObject("ProfMessage","Content Available Only for Users with Prof Role");
+        Docente user = docenteService.findUserByUsername(auth.getName());
+        modelAndView.addObject("username", "Benvenuto " + user.getUsername()  + " (" + user.getEmail() + ")");
+        modelAndView.addObject("messaggio","Contenuto disponibile solo per i docenti");
         modelAndView.setViewName("/docente/home");
         return modelAndView;
     }
@@ -86,9 +86,9 @@ public class UniversitaController {
     public ModelAndView homeS(){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Studente user = studenteService.findUserByUserName(auth.getName());
-        modelAndView.addObject("userName", "Welcome " + user.getMatricola() + user.getUsername()  + " (" + user.getEmail() + ")");
-        modelAndView.addObject("StudMessage","Content Available Only for Users with student Role");
+        Studente user = studenteService.findUserByUsername(auth.getName());
+        modelAndView.addObject("username", "Benvenuto " + user.getMatricola() + user.getUsername()  + " (" + user.getEmail() + ")");
+        modelAndView.addObject("messaggio","Contenuto disponibile solo per gli studenti");
         modelAndView.setViewName("/studente/home");
         return modelAndView;
     }

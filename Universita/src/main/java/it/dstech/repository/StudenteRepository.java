@@ -11,15 +11,13 @@ import it.dstech.models.Esame;
 import it.dstech.models.Studente;
 
 @Repository
-public interface StudenteRepository extends JpaRepository<Studente, Long>{
+public interface StudenteRepository extends JpaRepository<Studente, Integer>{
 
 	@Query(value = "SELECT s FROM Studente s WHERE s.matricola LIKE '%' || :keyword || '%'")
 	public List<Esame> search(@Param("keyword") String keyword);
-	
-	Studente findByListaEsami(List<Esame> listaEsami);
 
 	Studente findByEmail(String email);
 
-	Studente findByUserName(String username);
+	Studente findByUsername(String username);
 		
 }

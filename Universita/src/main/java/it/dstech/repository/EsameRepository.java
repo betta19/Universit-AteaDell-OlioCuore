@@ -19,9 +19,5 @@ public interface EsameRepository extends JpaRepository<Esame, Long>{
 			+ " OR e.voto LIKE '%' || :keyword || '%'"
 			+ " OR e.superato LIKE '%' || :keyword || '%'")
 	public List<Esame> search(@Param("keyword") String keyword);
-	
-	Esame findByListaDocenti(List<Docente> listaDocenti);
-	
-	Esame findByEsame(List<Studente> listStudenti);
-	
+
 }

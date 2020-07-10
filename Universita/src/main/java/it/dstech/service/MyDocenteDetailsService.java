@@ -25,7 +25,7 @@ public class MyDocenteDetailsService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) {
-        Docente docente = docenteService.findUserByUserName(username);
+        Docente docente = docenteService.findUserByUsername(username);
         List<GrantedAuthority> authorities = getUserAuthority(docente.getRoles());
         return buildUserForAuthentication(docente, authorities);
     }

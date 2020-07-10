@@ -61,7 +61,7 @@ public class Studente {
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Esame> listaEsami;
 	
-	@Column(name = "media_studente", columnDefinition="default '0.00'")
+	@Column(name = "media_studente")
 	private double media;
 
 	public Integer getMatricola() {

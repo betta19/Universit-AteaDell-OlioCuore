@@ -5,11 +5,14 @@ import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import it.dstech.models.Role;
 import it.dstech.models.Studente;
 import it.dstech.repository.RoleRepository;
 import it.dstech.repository.StudenteRepository;
+
+@Service
 
 public class StudenteService {
 	
@@ -26,8 +29,8 @@ public class StudenteService {
         return studenteRepository.findByEmail(email);
     }
 
-    public Studente findUserByUserName(String username) {
-        return studenteRepository.findByUserName(username);
+    public Studente findUserByUsername(String username) {
+        return studenteRepository.findByUsername(username);
     }
 
     public Studente saveUser(Studente studente) {

@@ -2,9 +2,12 @@ package it.dstech.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import it.dstech.models.Docente;
 import it.dstech.repository.DocenteRepository;
 
+@Service
 public class DocenteService {
 	
 	@Autowired
@@ -14,8 +17,8 @@ public class DocenteService {
         return docenteRepository.findByEmail(email);
     }
 
-    public Docente findUserByUserName(String userName) {
-        return docenteRepository.findByUserName(userName);
+    public Docente findUserByUsername(String userName) {
+        return docenteRepository.findByUsername(userName);
     }
 
 }
