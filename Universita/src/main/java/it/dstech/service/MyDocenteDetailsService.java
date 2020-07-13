@@ -21,7 +21,7 @@ public class MyDocenteDetailsService implements UserDetailsService {
 
     @Autowired
     private DocenteService docenteService;
-
+    
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) {
@@ -42,4 +42,5 @@ public class MyDocenteDetailsService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(docente.getUsername(), docente.getPassword(),
                 docente.getActive(), true, true, true, authorities);
     }
+    
 }

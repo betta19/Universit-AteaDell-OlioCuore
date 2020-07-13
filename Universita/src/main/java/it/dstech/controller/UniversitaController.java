@@ -1,5 +1,8 @@
 package it.dstech.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +15,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import it.dstech.models.Docente;
+import it.dstech.models.Esame;
 import it.dstech.models.Studente;
 import it.dstech.repository.DocenteRepository;
 import it.dstech.repository.StudenteRepository;
 import it.dstech.service.DocenteService;
+import it.dstech.service.EsameService;
 import it.dstech.service.StudenteService;
 
 @Controller
@@ -33,6 +38,9 @@ public class UniversitaController {
 	@Autowired
 	private DocenteService docenteService;
 	
+	@Autowired
+	private EsameService esameService;
+	
 	@GetMapping(value={"/", "/login"})
     public ModelAndView login(){
         ModelAndView modelAndView = new ModelAndView();
@@ -41,16 +49,16 @@ public class UniversitaController {
     }
 
 
-    @GetMapping(value="/registration")
+    @GetMapping(value="/registrazione")
     public ModelAndView registration(){
         ModelAndView modelAndView = new ModelAndView();
         Studente user = new Studente();
-        modelAndView.addObject("user", user);
-        modelAndView.setViewName("registration");
+        modelAndView.addObject("studente", user);
+        modelAndView.setViewName("registrazione");
         return modelAndView;
     }
 
-    @PostMapping(value = "/registration")
+    @PostMapping(value = "/registrazione")
     public ModelAndView createNewStudente(@Valid Studente studente, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
         Studente userExists = studenteService.findUserByUsername(studente.getUsername());
@@ -60,12 +68,12 @@ public class UniversitaController {
                             "Utente già presente");
         }
         if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("registration");
+            modelAndView.setViewName("registrazione");
         } else {
             studenteService.saveUser(studente);
             modelAndView.addObject("messaggio", "Utente registrato con successo!");
-            modelAndView.addObject("user", new Studente());
-            modelAndView.setViewName("registration");
+            modelAndView.addObject("studente", new Studente());
+            modelAndView.setViewName("login");
 
         }
         return modelAndView;
@@ -80,6 +88,45 @@ public class UniversitaController {
         modelAndView.addObject("messaggio","Contenuto disponibile solo per i docenti");
         modelAndView.setViewName("/docente/home");
         return modelAndView;
+    }
+    
+    @GetMapping (value="/docente/aggiungiEsame")
+    public ModelAndView aggiungiEsame() {
+    	ModelAndView modelAndView = new ModelAndView();
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    	Docente user = docenteService.findUserByUsername(auth.getName());
+    	modelAndView.addObject("listaEsame", user.getListaEsame());
+    	 modelAndView.addObject("esame", new Esame());
+    	   modelAndView.setViewName("/docente/salvaEsame");
+    	   return modelAndView;
+    }
+    
+    @PostMapping (value="/docente/salvaEsame")
+    	 public ModelAndView salvaEsame(Esame esame, BindingResult result) {
+    		ModelAndView modelAndView = new ModelAndView();
+    		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    		Docente user = docenteService.findUserByUsername(auth.getName());
+    		  docenteService.aggiungiEsame(user, esame);
+    		  modelAndView.addObject("listaEsame", user.getListaEsame());
+    		  modelAndView.addObject("esame", new Esame());
+    		   modelAndView.setViewName("/docente/salvaEsame");
+    		  return modelAndView;
+    		 }
+    
+    @GetMapping (value="/docente/listaStudenteEsame")
+    public ModelAndView listaStudenti (BindingResult result) {
+    	ModelAndView modelAndView = new ModelAndView();
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Docente user = docenteService.findUserByUsername(auth.getName());
+		List<String> listaStudente = new ArrayList<>();
+		for (int i = 0; i < user.getListaEsame().size(); i++) {
+			listaStudente.add(user.getListaEsame().get(i).getListaStudenti().get(i).getUsername());
+		}
+    	modelAndView.addObject("listaStudente", listaStudente);
+    	modelAndView.setViewName("/docente/listaStudente");
+		  return modelAndView;
+    	
+    	
     }
     
     @GetMapping(value="/studente/home")

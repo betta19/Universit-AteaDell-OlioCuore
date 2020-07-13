@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -64,6 +65,9 @@ public class Studente {
 	@Column(name = "media_studente")
 	private double media;
 
+	@OneToOne
+	private Libretto libretto; 
+	
 	public Integer getMatricola() {
 		return matricola;
 	}
@@ -126,6 +130,14 @@ public class Studente {
 
 	public void setMedia(double media) {
 		this.media = media;
+	}
+
+	public Libretto getLibretto() {
+		return libretto;
+	}
+
+	public void setLibretto(Libretto libretto) {
+		this.libretto = libretto;
 	}
 
 	

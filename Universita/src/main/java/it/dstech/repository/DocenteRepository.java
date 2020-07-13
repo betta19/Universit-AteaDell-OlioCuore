@@ -9,7 +9,7 @@ import it.dstech.models.Docente;
 import it.dstech.models.Esame;
 
 @Repository
-public interface DocenteRepository extends JpaRepository<Docente, Long> {
+public interface DocenteRepository extends JpaRepository<Docente, Integer> {
 
 	Docente findByEmail(String email);
 

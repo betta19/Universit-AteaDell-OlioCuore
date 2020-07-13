@@ -17,9 +17,13 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.springframework.lang.Nullable;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -53,6 +57,9 @@ public class Docente {
     
     @Column(name = "active")
     private Boolean active;
+    
+    @ManyToMany
+    private List<Libretto> libretto;
 
 	@ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "docente_role", joinColumns = @JoinColumn(name = "docente_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -108,6 +115,22 @@ public class Docente {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+
+	public List<Libretto> getLibretto() {
+		return libretto;
+	}
+
+	public void setLibretto(List<Libretto> libretto) {
+		this.libretto = libretto;
+	}
+
+	public List<Esame> getListaEsame() {
+		return listaEsame;
+	}
+
+	public void setListaEsame(List<Esame> listaEsame) {
+		this.listaEsame = listaEsame;
 	}
 	
 	

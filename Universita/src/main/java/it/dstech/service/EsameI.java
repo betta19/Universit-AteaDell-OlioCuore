@@ -8,4 +8,5 @@ import it.dstech.models.Studente;
 
 public interface EsameI {
 	
+	public List<Esame> findAllEsame();
 }
