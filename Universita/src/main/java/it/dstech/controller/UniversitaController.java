@@ -125,8 +125,6 @@ public class UniversitaController {
     	modelAndView.addObject("listaStudente", listaStudente);
     	modelAndView.setViewName("/docente/listaStudente");
 		  return modelAndView;
-    	
-    	
     }
     
     @GetMapping(value="/studente/home")

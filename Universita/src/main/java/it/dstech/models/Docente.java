@@ -17,13 +17,9 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.bind.DefaultValue;
-import org.springframework.lang.Nullable;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Builder.Default;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -40,7 +36,7 @@ public class Docente {
     @Column(name = "docente_id")
     private Integer id;
 	
-	@Column(name = "docente_username")
+	@Column(name = "username")
     @Length(min = 5, message = "*Your user name must have at least 5 characters")
     @NotEmpty(message = "*Please provide a user name")
     private String username;
@@ -55,9 +51,6 @@ public class Docente {
     @NotEmpty(message = "*Please provide your password")
     private String password;
     
-    @Column(name = "active")
-    private Boolean active;
-    
     @ManyToMany
     private List<Libretto> libretto;
 
@@ -67,6 +60,7 @@ public class Docente {
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@Column(name = "esame_id")
+	@Builder.Default
 	private List<Esame> listaEsame;
 
 	public Integer getId() {
@@ -99,14 +93,6 @@ public class Docente {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public Boolean getActive() {
-		return active;
-	}
-
-	public void setActive(Boolean active) {
-		this.active = active;
 	}
 
 	public Set<Role> getRoles() {
