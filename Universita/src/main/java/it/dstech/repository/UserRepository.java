@@ -7,7 +7,7 @@ import it.dstech.models.User;
 
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Integer> {
 	User findByEmail(String email);	
-	   User findUserByUserName(String userName);
+	   User findUserByUsername(String username);
 }

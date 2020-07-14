@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -41,12 +40,8 @@ public class Esame {
 	private boolean superato;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
-	@Column(name = "docente_id")
-	private List<Docente> listaDocente;
-
-	@ManyToMany(cascade = CascadeType.ALL)
-	@Column(name = "studente_id")
-	private List<Studente> listaStudenti;
+	@Column(name = "user_id")
+	private List<User> listaUser; // intesa come lista studenti
 
 	@ManyToMany
 	private List<Libretto> libretto;
@@ -75,20 +70,12 @@ public class Esame {
 		this.data = data;
 	}
 
-	public List<Docente> getListaDocente() {
-		return listaDocente;
+	public List<User> getListaUser() {
+		return listaUser;
 	}
 
-	public void setListaDocente(List<Docente> listaDocente) {
-		this.listaDocente = listaDocente;
-	}
-
-	public List<Studente> getListaStudenti() {
-		return listaStudenti;
-	}
-
-	public void setListaStudenti(List<Studente> listaStudenti) {
-		this.listaStudenti = listaStudenti;
+	public void setListaUser(List<User> listaUser) {
+		this.listaUser = listaUser;
 	}
 
 	public boolean isSuperato() {

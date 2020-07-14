@@ -2,14 +2,11 @@ package it.dstech.models;
 
 import java.util.List;
 
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,23 +23,22 @@ public class Libretto {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	@OneToOne
-	public Studente studente;
-	
 	@ManyToMany
-	public List<Docente> docente;
+	public List<User> user;
 	
 	@ManyToMany
 	public List<Esame> esame;
 	
 	public int voto;
-
-	public Studente getStudente() {
-		return studente;
+	
+	private double media;
+	
+	public double getMedia() {
+		return media;
 	}
 
-	public void setStudente(Studente studente) {
-		this.studente = studente;
+	public void setMedia(double media) {
+		this.media = media;
 	}
 
 	public Integer getId() {
@@ -51,14 +47,6 @@ public class Libretto {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public List<Docente> getDocente() {
-		return docente;
-	}
-
-	public void setDocente(List<Docente> docente) {
-		this.docente = docente;
 	}
 
 	public List<Esame> getEsame() {

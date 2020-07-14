@@ -16,7 +16,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import it.dstech.service.EmployeeAuthenticationSuccessHandler;
 
-//import it.dstech.service.MyUserDetailsService;
+import it.dstech.service.MyUserDetailsService;
 
 
 @Configuration
@@ -26,8 +26,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-//    @Autowired
-//    private MyUserDetailsService usDetailsService;
+    @Autowired
+    private MyUserDetailsService usDetailsService;
     
    
     
@@ -37,10 +37,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     	
-//                auth
-//                .userDetailsService(usDetailsService).passwordEncoder(bCryptPasswordEncoder);
-//                .and()
-//                .userDetailsService(docenteDetailsService).passwordEncoder(bCryptPasswordEncoder); 
+                auth
+                .userDetailsService(usDetailsService).passwordEncoder(bCryptPasswordEncoder);
                 
     }
     
