@@ -60,7 +60,6 @@ public class Docente {
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@Column(name = "esame_id")
-	@Builder.Default
 	private List<Esame> listaEsame;
 
 	public Integer getId() {
