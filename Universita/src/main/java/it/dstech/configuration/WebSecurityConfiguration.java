@@ -2,21 +2,21 @@ package it.dstech.configuration;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import it.dstech.models.Role;
+
 import it.dstech.service.EmployeeAuthenticationSuccessHandler;
-import it.dstech.service.MyDocenteDetailsService;
-import it.dstech.service.MyStudenteDetailsService;
+
+//import it.dstech.service.MyUserDetailsService;
 
 
 @Configuration
@@ -26,24 +26,21 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Autowired
-    private MyDocenteDetailsService docenteDetailsService;
+//    @Autowired
+//    private MyUserDetailsService usDetailsService;
     
-    @Autowired
-    private MyStudenteDetailsService studenteDetailsService;
+   
     
     @Autowired
 	private EmployeeAuthenticationSuccessHandler successHandler;
-    
-    
-
+ 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     	
-                auth
-                .userDetailsService(studenteDetailsService).passwordEncoder(bCryptPasswordEncoder)
-                .and()
-                .userDetailsService(docenteDetailsService).passwordEncoder(bCryptPasswordEncoder); 
+//                auth
+//                .userDetailsService(usDetailsService).passwordEncoder(bCryptPasswordEncoder);
+//                .and()
+//                .userDetailsService(docenteDetailsService).passwordEncoder(bCryptPasswordEncoder); 
                 
     }
     
