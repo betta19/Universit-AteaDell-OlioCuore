@@ -27,20 +27,18 @@ public class Esame {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "esame_id")
+
 	private Integer id;
 
-	@Column(name = "nome_esame")
 	private String nome;
 
-	@Column(name = "data_esame")
 	private String data;
 
-	@Column(name = "pass_esame", columnDefinition = "boolean default false")
+	@Column(columnDefinition = "boolean default false")
 	private boolean superato;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
-	@Column(name = "user_id")
+
 	private List<User> listaUser; // intesa come lista studenti
 
 	@ManyToMany

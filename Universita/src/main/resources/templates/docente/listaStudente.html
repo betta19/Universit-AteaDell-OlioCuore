@@ -27,7 +27,7 @@
 						</thead>
 						<tbody>
 							<tr th:each="studente : ${listaStudente}">
-								<td th:text="${studente}"></td>
+								<td th:text="${studente.nome}"></td>
 								
 
 							</tr>
@@ -36,7 +36,7 @@
 					<form th:action="@{/docente/home}" method="get">
     <button class="btn btn-md btn-info btn-block" type="Submit">Home</button>
 </form>
-					  </div>
+		</div>
     </div>
 </div>
 

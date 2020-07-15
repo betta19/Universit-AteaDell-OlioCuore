@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,6 +35,8 @@ public class UniversitaController {
 	@Autowired
 	private EsameService esameService;
 	
+	private Logger logger = LoggerFactory.getLogger(UniversitaController.class);
+	
 	@GetMapping(value={"/", "/login"})
     public ModelAndView login(){
         ModelAndView modelAndView = new ModelAndView();
@@ -45,7 +49,7 @@ public class UniversitaController {
     public ModelAndView registration(){
         ModelAndView modelAndView = new ModelAndView();
         User user = new User();
-        modelAndView.addObject("studente", user);
+        modelAndView.addObject("user", user);
         modelAndView.setViewName("registrazione");
         return modelAndView;
     }
@@ -82,7 +86,7 @@ public class UniversitaController {
         return modelAndView;
     }
     
-    @GetMapping (value="/docente/aggiungiEsame")
+    @PostMapping (value="/docente/aggiungiEsame")
     public ModelAndView aggiungiEsame() {
     	ModelAndView modelAndView = new ModelAndView();
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -101,19 +105,23 @@ public class UniversitaController {
     		  userService.aggiungiEsame(userD, esame);
     		  modelAndView.addObject("listaEsame", userD.getListaEsame());
     		  modelAndView.addObject("esame", new Esame());
-    		   modelAndView.setViewName("/docente/salvaEsame");
+    		   modelAndView.setViewName("/docente/home");
     		  return modelAndView;
     		 }
     
-    @GetMapping (value="/docente/listaStudenteEsame")
-    public ModelAndView listaStudenti (BindingResult result) {
+    
+    @PostMapping (value="/docente/listaStudenteEsame")
+    public ModelAndView listaStudenti () {
     	ModelAndView modelAndView = new ModelAndView();
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User userD = userService.findUserByUsername(auth.getName());
 		List<User> listaStudente = new ArrayList<>();
 		for (int i = 0; i < userD.getListaEsame().size(); i++) {
-			listaStudente.add(userD.getListaEsame().get(i).getListaUser().get(i));
+			for (int j = 0; j < userD.getListaEsame().get(i).getListaUser().size(); j++) {
+				listaStudente.add(userD.getListaEsame().get(i).getListaUser().get(j));
+			}
 		}
+		logger.warn(String.format("userD %s", userD.getUsername()));
     	modelAndView.addObject("listaStudente", listaStudente);
     	modelAndView.setViewName("/docente/listaStudente");
 		  return modelAndView;

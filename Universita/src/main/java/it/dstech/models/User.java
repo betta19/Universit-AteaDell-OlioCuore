@@ -32,20 +32,16 @@ public class User {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private Integer id;
 
-	@Column(name = "username")
     @Length(min = 5, message = "*Your user name must have at least 5 characters")
     @NotEmpty(message = "*Please provide a user name")
     private String username;
 	
-    @Column(name = "email")
     @Email(message = "*Please provide a valid Email")
     @NotEmpty(message = "*Please provide an email")
     private String email;
     
-    @Column(name = "password")
     @Length(min = 5, message = "*Your password must have at least 5 characters")
     @NotEmpty(message = "*Please provide your password")
     private String password;
@@ -58,7 +54,6 @@ public class User {
     private Set<Role> roles;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
-	@Column(name = "esame_id")
 	private List<Esame> listaEsame;
 
 	public Integer getId() {
@@ -115,6 +110,12 @@ public class User {
 
 	public void setListaEsame(List<Esame> listaEsame) {
 		this.listaEsame = listaEsame;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password
+				+ ", libretto=" + libretto + ", roles=" + roles + ", listaEsame=" + listaEsame + "]";
 	}
 	
 
