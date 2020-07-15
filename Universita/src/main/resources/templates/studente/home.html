@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Studente</title>
+    <title>Bacheca Studente</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -11,6 +11,39 @@
 </head>
 
 <body>
+<div class="container">
 
+    <form th:action="@{/logout}" method="get">
+        <button class="btn btn-md btn-danger btn-block" name="login"
+                type="Submit">Logout
+        </button>
+    </form>
+
+		<form th:action="@{/studente/mostraListaEsami}" method="get">
+        <button class="btn btn-md btn-danger btn-block" name="aggiungiEsame"
+                type="Submit">Mostra esami disponibili
+        </button>
+    </form>
+    
+    	<form th:action="@{/studente/mostraMedia}" method="get">
+        <button class="btn btn-md btn-danger btn-block" name="mostraMedia"
+                type="Submit">Guarda la tua media
+        </button>
+    </form>
+
+    <div class="panel-group" style="margin-top:40px">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span th:utext="${username}"></span>
+            </div>
+            <div class="panel-body">
+                <img th:src="@{/images/doctor.png}" class="img-responsive center-block" width="550" height="960"
+                     alt="Doctor"/>
+            </div>
+            <p class="doctor-message-text text-center" th:utext="${messaggio}"></p>
+        </div>
+    </div>
+
+</div>
 </body>
 </html>

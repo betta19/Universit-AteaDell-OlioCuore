@@ -2,6 +2,9 @@ package it.dstech.service;
 
 
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +21,21 @@ public class EsameService implements EsameI{
 
 	@Override
 	public List<Esame> findAllEsame() {
-		return esameRepository.findAll();
+		
+		List<Esame> listaEsamePreno = new ArrayList<>();
+		for (Esame esame : esameRepository.findAll()) {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+			LocalDateTime data = LocalDateTime.parse(esame.getData(), formatter);
+			if (!data.isBefore(LocalDateTime.now())) {
+				listaEsamePreno.add(esame);
+			}
+		}
+		return listaEsamePreno;
 	}
 
+	public Esame findById(Integer id) {
+		return esameRepository.findById(id).get();
+	}
 	
 		
 }

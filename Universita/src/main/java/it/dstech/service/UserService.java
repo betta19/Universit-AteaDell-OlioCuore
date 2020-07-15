@@ -45,12 +45,6 @@ public class UserService {
     }
 
 	public boolean aggiungiEsame(User userD, Esame esame) {
-//		if (esameRepo.existsById(esame.getId())) {
-//			
-//			Esame sovrascriviEsame = esame;
-//
-//			esameRepo.save(sovrascriviEsame);
-//		}
 		esame.setId(esame.getId());
 		userD.setId(userD.getId());
 		userD.getListaEsame().add(esame);
@@ -59,5 +53,7 @@ public class UserService {
 		return save != null;
 
 	}
+	
+	
 		
 }

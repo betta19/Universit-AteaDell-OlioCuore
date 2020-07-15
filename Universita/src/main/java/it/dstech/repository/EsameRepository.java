@@ -1,6 +1,8 @@
 package it.dstech.repository;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import it.dstech.models.Esame;
@@ -18,5 +20,7 @@ public interface EsameRepository extends JpaRepository<Esame, Integer>{
 	public List<Esame> findAll();
 
 	public boolean existsById(Integer id); 
+	
+	public Optional<Esame> findById(Integer id);
 
 }

@@ -1,5 +1,6 @@
 package it.dstech.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,12 +14,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 
 import it.dstech.models.Esame;
 import it.dstech.models.User;
+import it.dstech.repository.EsameRepository;
 import it.dstech.repository.UserRepository;
 import it.dstech.service.EsameService;
 import it.dstech.service.UserService;
@@ -102,11 +106,11 @@ public class UniversitaController {
     		ModelAndView modelAndView = new ModelAndView();
     		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     		User userD = userService.findUserByUsername(auth.getName());
-    		  userService.aggiungiEsame(userD, esame);
-    		  modelAndView.addObject("listaEsame", userD.getListaEsame());
-    		  modelAndView.addObject("esame", new Esame());
-    		   modelAndView.setViewName("/docente/home");
-    		  return modelAndView;
+    		userService.aggiungiEsame(userD, esame);
+    		modelAndView.addObject("listaEsame", userD.getListaEsame());
+    		modelAndView.addObject("esame", new Esame());
+    		modelAndView.setViewName("/docente/home");
+    		return modelAndView;
     		 }
     
     
@@ -136,5 +140,36 @@ public class UniversitaController {
         modelAndView.addObject("messaggio","Contenuto disponibile solo per gli studenti");
         modelAndView.setViewName("/studente/home");
         return modelAndView;
+    }
+    
+    @GetMapping(value="/studente/mostraListaEsami")
+    public ModelAndView mostaEsame() {
+    	ModelAndView modelAndView = new ModelAndView();
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    	User userS = userService.findUserByUsername(auth.getName());
+    	modelAndView.addObject("username", "Benvenuto "+ userS.getUsername()  + " (" + userS.getEmail() + ")");
+    	modelAndView.addObject("listaEsami", esameService.findAllEsame());
+    	modelAndView.setViewName("/studente/iscrizioneEsame");
+    	return modelAndView;
+    }
+    
+    @PostMapping(value="/studente/iscrizioneEsame/{id}")
+    public ModelAndView iscrizioneEsame(@PathVariable("id") Integer id) {
+    	ModelAndView modelAndView = new ModelAndView();
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    	User userS = userService.findUserByUsername(auth.getName());
+    	Esame esame = esameService.findById(id);
+    	
+    	return null;
+    }
+    
+    @GetMapping(value="/studente/mostraMedia")
+    public ModelAndView mostaMedia() {
+    	return null;
+    }
+    
+    @PostMapping(value="/docente/votoEsame")
+    public ModelAndView mettiVoto() {
+    	return null;
     }
 }
