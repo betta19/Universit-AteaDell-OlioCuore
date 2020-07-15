@@ -13,6 +13,8 @@
 <body>
 <div class="container">
 
+<p class="doctor-message-text text-center" th:utext="${mess}"></p>
+
     <form th:action="@{/logout}" method="get">
         <button class="btn btn-md btn-danger btn-block" name="login"
                 type="Submit">Logout
@@ -37,8 +39,8 @@
                 <span th:utext="${username}"></span>
             </div>
             <div class="panel-body">
-                <img th:src="@{/images/doctor.png}" class="img-responsive center-block" width="550" height="960"
-                     alt="Doctor"/>
+                <img th:src="@{/images/sfigato.jpg}" class="img-responsive center-block" width="550" height="960"
+                     alt="sfigato"/>
             </div>
             <p class="doctor-message-text text-center" th:utext="${messaggio}"></p>
         </div>

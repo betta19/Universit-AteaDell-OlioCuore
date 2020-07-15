@@ -119,15 +119,9 @@ public class UniversitaController {
     	ModelAndView modelAndView = new ModelAndView();
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User userD = userService.findUserByUsername(auth.getName());
-		List<User> listaStudente = new ArrayList<>();
-		for (int i = 0; i < userD.getListaEsame().size(); i++) {
-			for (int j = 0; j < userD.getListaEsame().get(i).getListaUser().size(); j++) {
-				listaStudente.add(userD.getListaEsame().get(i).getListaUser().get(j));
-			}
-		}
 		logger.warn(String.format("userD %s", userD.getUsername()));
-    	modelAndView.addObject("listaStudente", listaStudente);
-    	modelAndView.setViewName("/docente/listaStudente");
+    	modelAndView.addObject("listaEsame", userD.getListaEsame());
+    	modelAndView.setViewName("/docente/listaEsame");
 		  return modelAndView;
     }
     
@@ -153,14 +147,32 @@ public class UniversitaController {
     	return modelAndView;
     }
     
-    @PostMapping(value="/studente/iscrizioneEsame/{id}")
+    @GetMapping(value="/studente/iscrizioneEsame/{id}")
     public ModelAndView iscrizioneEsame(@PathVariable("id") Integer id) {
     	ModelAndView modelAndView = new ModelAndView();
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     	User userS = userService.findUserByUsername(auth.getName());
     	Esame esame = esameService.findById(id);
-    	
-    	return null;
+    	esameService.prenotaEsame(userS, esame);
+    	modelAndView.addObject("username", "Benvenuto "+ userS.getUsername()  + " (" + userS.getEmail() + ")");
+    	modelAndView.addObject("mess","Iscrizione esame effettuata");
+    	modelAndView.addObject("messaggio","Contenuto disponibile solo per gli studenti");
+    	modelAndView.setViewName("/studente/home");
+    	return modelAndView;
+    }
+    
+    @GetMapping(value="/docente/assegnaVoto/{id}")
+    public ModelAndView assegnaVoto(@PathVariable("id") Integer id) {
+    	ModelAndView modelAndView = new ModelAndView();
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    	User userd = userService.findUserByUsername(auth.getName());
+    	Esame esame = esameService.findById(id);
+    	esameService.votazioneEsame(userd, esame);
+    	modelAndView.addObject("username", "Benvenuto "+ userd.getUsername()  + " (" + userd.getEmail() + ")");
+    	modelAndView.addObject("mess","Voto assegnato");
+    	modelAndView.addObject("messaggio","Contenuto disponibile solo per i docenti");
+    	modelAndView.setViewName("/docente/home");
+    	return modelAndView;
     }
     
     @GetMapping(value="/studente/mostraMedia")

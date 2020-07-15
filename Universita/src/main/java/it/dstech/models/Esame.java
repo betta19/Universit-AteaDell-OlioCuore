@@ -35,7 +35,7 @@ public class Esame {
 	private String data;
 
 	@Column(columnDefinition = "boolean default false")
-	private boolean superato;
+	private boolean iscritto;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 
@@ -76,12 +76,12 @@ public class Esame {
 		this.listaUser = listaUser;
 	}
 
-	public boolean isSuperato() {
-		return superato;
+	public boolean isIscritto() {
+		return iscritto;
 	}
 
-	public void setSuperato(boolean superato) {
-		this.superato = superato;
+	public void setIscritto(boolean iscritto) {
+		this.iscritto = iscritto;
 	}
 
 	public List<Libretto> getLibretto() {

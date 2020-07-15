@@ -25,10 +25,18 @@
 								
 							</tr>
 						</thead>
+
 						<tbody>
-							<tr th:each="studente : ${listaStudente}">
-								<td th:text="${studente.nome}"></td>
+							<tr th:each="esame : ${listaEsame}">
+								<td th:text="${esame.nome}"></td>
+								<td th:text="${esame.data}"></td>
 								
+								<td> 
+								
+								<a th:href="@{/docente/assegnaVoto/{id}
+									(id=${esame.id})}"class="btn btn-primary"> Assegna il voto </a>
+								</td>
+									
 
 							</tr>
 						</tbody>

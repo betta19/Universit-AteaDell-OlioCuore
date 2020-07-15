@@ -26,12 +26,16 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="esame : ${listaEsame}">
+							<tr th:each="esame : ${listaEsami}">
 								<td th:text="${esame.nome}"></td>
 								<td th:text="${esame.data}"></td>
-								<td th:text="${esame.listaUser}"></td>
-								<td><a th:href="@{/studente/iscrizioneEsame/{id}
-									(id=${esame.id})}"class="btn btn-primary"></a></td>
+								
+								<td th:unless="${esame.iscritto}"> 
+								
+								<a th:href="@{/studente/iscrizioneEsame/{id}
+									(id=${esame.id})}"class="btn btn-primary"> Iscriviti </a></td>
+									
+								<td th:if="${esame.iscritto}"> Iscritto </td> 
 
 							</tr>
 						</tbody>
