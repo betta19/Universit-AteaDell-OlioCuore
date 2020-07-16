@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
@@ -25,8 +26,7 @@ public class Libretto {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	@OneToOne
-	public User studente;
+	public String studente;
 	
 	@ManyToMany
 	public List<User> user;
@@ -35,18 +35,11 @@ public class Libretto {
 	@ManyToMany
 	public List<Esame> esame;
 	
-	public List<Integer> voto;
 	
-	private double media;
+	public int voto;
 	
-	public double getMedia() {
-		return media;
-	}
 
-	public void setMedia(double media) {
-		this.media = media;
-	}
-
+	
 	public Integer getId() {
 		return id;
 	}
@@ -63,11 +56,12 @@ public class Libretto {
 		this.esame = esame;
 	}
 
-	public List<Integer> getVoto() {
+	
+	public int getVoto() {
 		return voto;
 	}
 
-	public void setVoto(List<Integer> voto) {
+	public void setVoto(int voto) {
 		this.voto = voto;
 	}
 
@@ -79,12 +73,14 @@ public class Libretto {
 		this.user = user;
 	}
 
-	public User getStudente() {
+	public String getStudente() {
 		return studente;
 	}
 
-	public void setStudente(User studente) {
+	public void setStudente(String studente) {
 		this.studente = studente;
 	}
+
+	
 	
 }

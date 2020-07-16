@@ -33,12 +33,13 @@ public class Esame {
 	private String nome;
 
 	private String data;
+	
+	private String docente;
 
 	@Column(columnDefinition = "boolean default false")
 	private boolean iscritto;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
-
 	private List<User> listaUser; // intesa come lista studenti
 
 	@ManyToMany
@@ -90,6 +91,14 @@ public class Esame {
 
 	public void setLibretto(List<Libretto> libretto) {
 		this.libretto = libretto;
+	}
+
+	public String getDocente() {
+		return docente;
+	}
+
+	public void setDocente(String docente) {
+		this.docente = docente;
 	}
 	
 	

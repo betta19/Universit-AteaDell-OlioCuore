@@ -5,9 +5,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import it.dstech.models.Esame;
+import it.dstech.models.Libretto;
 import it.dstech.models.Role;
 import it.dstech.models.User;
 import it.dstech.repository.EsameRepository;
+import it.dstech.repository.LibrettoRepository;
 import it.dstech.repository.RoleRepository;
 import it.dstech.repository.UserRepository;
 
@@ -20,6 +22,10 @@ public class UserService {
 
 	@Autowired
     private UserRepository userRepository;
+	
+	@Autowired
+    private LibrettoRepository librettoRepository;
+	
 	@Autowired
     private RoleRepository roleRepository;
 	
@@ -40,14 +46,22 @@ public class UserService {
 
     public User saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        Libretto libretto = new Libretto();
+        libretto.setStudente(user.getUsername());
+        libretto.setUser(null);
+        libretto.setVoto(0);
+        libretto.setEsame(null);
+        librettoRepository.save(libretto);
         Role userRole = roleRepository.findByRole("STUDENTE");
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+        
         return userRepository.save(user);
     }
 
 	public boolean aggiungiEsame(User userD, Esame esame) {
 		esame.setId(esame.getId());
 		userD.setId(userD.getId());
+		esame.setDocente(userD.getUsername());
 		userD.getListaEsame().add(esame);
 		Esame save = esameRepo.save(esame);
 		userRepository.save(userD);

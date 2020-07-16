@@ -24,9 +24,8 @@
 
 
 			<form action="#" th:action="@{/docente/assegnaVoto}"
-		th:object="${user}">
-		<input type="hidden" th:value="${esame.id}" name="idEsame" /> 
-		<h2 th:text="${esame.nome}"></h2>
+		th:object="${user}" method ="post">
+		<input type="hidden" th:value="${esame}" name="idEsame" /> 
 		<br> <br>
 		<div th:switch="${listaStudente}" class="container my-5">
 			<div class="row">

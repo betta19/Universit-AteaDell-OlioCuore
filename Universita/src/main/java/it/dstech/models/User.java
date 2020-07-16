@@ -4,12 +4,15 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
@@ -46,11 +49,12 @@ public class User {
     @NotEmpty(message = "*Please provide your password")
     private String password;
     
-    @OneToOne
-    private Libretto librettoStudente;
     
     @ManyToMany
     private List<Libretto> libretto;
+    
+    @Column(nullable = true)
+    private Double media;
     
 	@ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "user_role")
@@ -115,21 +119,23 @@ public class User {
 		this.listaEsame = listaEsame;
 	}
 
-	public Libretto getLibrettoStudente() {
-		return librettoStudente;
+	public double getMedia() {
+		return media;
 	}
 
-	public void setLibrettoStudente(Libretto librettoStudente) {
-		this.librettoStudente = librettoStudente;
+	public void setMedia(double media) {
+		this.media = media;
 	}
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password
-				+ ", librettoStudente=" + librettoStudente + ", libretto=" + libretto + ", roles=" + roles
-				+ ", listaEsame=" + listaEsame + "]";
+				+ ", libretto=" + libretto + ", media=" + media + ", roles=" + roles + ", listaEsame=" + listaEsame
+				+ "]";
 	}
 
+	
+	
 	
 
 }
