@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -44,6 +45,9 @@ public class User {
     @Length(min = 5, message = "*Your password must have at least 5 characters")
     @NotEmpty(message = "*Please provide your password")
     private String password;
+    
+    @OneToOne
+    private Libretto librettoStudente;
     
     @ManyToMany
     private List<Libretto> libretto;
@@ -111,11 +115,21 @@ public class User {
 		this.listaEsame = listaEsame;
 	}
 
+	public Libretto getLibrettoStudente() {
+		return librettoStudente;
+	}
+
+	public void setLibrettoStudente(Libretto librettoStudente) {
+		this.librettoStudente = librettoStudente;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password
-				+ ", libretto=" + libretto + ", roles=" + roles + ", listaEsame=" + listaEsame + "]";
+				+ ", librettoStudente=" + librettoStudente + ", libretto=" + libretto + ", roles=" + roles
+				+ ", listaEsame=" + listaEsame + "]";
 	}
+
 	
 
 }

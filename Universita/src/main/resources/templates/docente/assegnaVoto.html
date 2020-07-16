@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Studenti</title>
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/registration.css}" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<form th:action="@{/}" method="get">
+		<button class="btn btn-md btn-warning btn-block" type="Submit">Vai
+			alla pagina di login</button>
+	</form>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+
+
+			<form action="#" th:action="@{/docente/assegnaVoto}"
+		th:object="${user}">
+		<input type="hidden" th:value="${esame.id}" name="idEsame" /> 
+		<h2 th:text="${esame.nome}"></h2>
+		<br> <br>
+		<div th:switch="${listaStudente}" class="container my-5">
+			<div class="row">
+				<div class="col-md-6" align="left">
+					<h2 th:case="null">Nessuno studente iscritto!</h2>
+					<div th:case="*">
+						<h2 class="my-5">Studenti</h2>
+						<input type= "number" name="voto" id="voto" min="0" max="30" required = "required" placeholder="Votazione">
+						   <ul>
+						    <li th:each="studente : ${listaStudente}">
+                <input type="radio" th:field="${user.id}" th:value="${studente.id}" />
+                <label th:for="${studente.id}" th:text="${studente.username}"></label>
+            </li>
+            </ul>
+						<input type="submit" class="btn btn-primary"
+							value="Assegna voto">
+
+					</div>
+
+				</div>
+				<br> <br>
+			</div>
+		</div>
+	</form>
+
+				<form th:action="@{/docente/home}" method="get">
+					<button class="btn btn-md btn-info btn-block" type="Submit">Home</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

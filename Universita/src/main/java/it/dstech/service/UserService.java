@@ -13,6 +13,7 @@ import it.dstech.repository.UserRepository;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -54,6 +55,9 @@ public class UserService {
 
 	}
 	
+	public Optional<User> findById (int id) {
+		return userRepository.findById(id);
+	}
 	
 		
 }

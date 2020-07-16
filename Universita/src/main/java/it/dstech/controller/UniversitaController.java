@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -161,18 +162,31 @@ public class UniversitaController {
     	return modelAndView;
     }
     
-    @GetMapping(value="/docente/assegnaVoto/{id}")
-    public ModelAndView assegnaVoto(@PathVariable("id") Integer id) {
+    @GetMapping(value="/docente/dettagliEsame/{id}")
+    public ModelAndView dettagliEsame(@PathVariable("id") Integer id) {
     	ModelAndView modelAndView = new ModelAndView();
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     	User userd = userService.findUserByUsername(auth.getName());
     	Esame esame = esameService.findById(id);
-    	esameService.votazioneEsame(userd, esame);
     	modelAndView.addObject("username", "Benvenuto "+ userd.getUsername()  + " (" + userd.getEmail() + ")");
     	modelAndView.addObject("mess","Voto assegnato");
     	modelAndView.addObject("messaggio","Contenuto disponibile solo per i docenti");
-    	modelAndView.setViewName("/docente/home");
+    	modelAndView.addObject("listaStudente", esame.getListaUser());
+    	modelAndView.addObject("esame", esame.getId());
+    	modelAndView.setViewName("/docente/assegnaVoto");
     	return modelAndView;
+    }
+    
+    @PostMapping(value="/docente/assegnaVoto")
+    public ModelAndView mettiVoto(@ModelAttribute User studente, @RequestParam ("idEsame") Integer idEsame, @RequestParam ("voto") Integer voto) {
+    	ModelAndView modelAndView = new ModelAndView();
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    	User userd = userService.findUserByUsername(auth.getName());
+    	User idStudente = userService.findById(studente.getId()).get();
+    	Esame esame = esameService.findById(idEsame); 
+    	esameService.votazioneEsame(userd, esame, idStudente, voto);
+    	esameService.calcoloMedia(idStudente, idStudente.getLibrettoStudente());
+    	return null;
     }
     
     @GetMapping(value="/studente/mostraMedia")
@@ -180,8 +194,5 @@ public class UniversitaController {
     	return null;
     }
     
-    @PostMapping(value="/docente/votoEsame")
-    public ModelAndView mettiVoto() {
-    	return null;
-    }
+    
 }
